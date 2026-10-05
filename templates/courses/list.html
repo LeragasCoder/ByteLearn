@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block title %}دوره‌ها · درس‌خانه{% endblock %}
+
+{% block content %}
+  <header class="mast">
+    <p class="kicker">فروشگاه دوره</p>
+    <h1>مهارت عملی، دسترسی ایمیلی.</h1>
+    <p class="lede">دوره را باز کنید، نام و ایمیل را بنویسید و خرید را ثبت کنید. لینک و راهنمای ورود به همان ایمیل می‌رسد.</p>
+  </header>
+
+  {% if courses %}
+    <section class="grid" aria-label="دوره‌های منتشرشده">
+      {% for course in courses %}
+        <article class="card">
+          <a class="card-media" href="{{ course.get_absolute_url }}" tabindex="-1" aria-hidden="true">
+            {% if course.cover %}
+              <img src="{{ course.cover.url }}" alt="" width="640" height="427" {% if not forloop.first %}loading="lazy"{% endif %}>
+            {% endif %}
+          </a>
+          <div class="card-body">
+            <h2><a href="{{ course.get_absolute_url }}">{{ course.title }}</a></h2>
+            <p>{{ course.short_description }}</p>
+            <div class="card-foot">
+              <p class="price">{{ course.price|toman }}</p>
+              <a class="button button-ghost" href="{{ course.get_absolute_url }}">مشاهده</a>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  {% else %}
+    <p class="lede">فعلاً دوره‌ای منتشر نشده است.</p>
+  {% endif %}
+{% endblock %}

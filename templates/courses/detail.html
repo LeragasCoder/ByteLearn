@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block title %}{{ course.title }} · درس‌خانه{% endblock %}
+
+{% block content %}
+  <article class="detail">
+    <div class="detail-main">
+      {% if course.cover %}
+        <div class="detail-cover">
+          <img src="{{ course.cover.url }}" alt="" width="960" height="640">
+        </div>
+      {% endif %}
+      <p class="kicker">دوره</p>
+      <h1>{{ course.title }}</h1>
+      <p class="price price-lg price-inline">{{ course.price|toman }}</p>
+      <p class="lede">{{ course.short_description }}</p>
+      <div class="prose">{{ course.description|linebreaks }}</div>
+    </div>
+
+    <aside class="buy" aria-label="خرید دوره">
+      <p class="price price-lg">{{ course.price|toman }}</p>
+      <p class="buy-note">بعد از ثبت، اطلاعات ورود برای شما ایمیل می‌شود.</p>
+      <form class="form" method="post" action="{{ course.get_absolute_url }}" novalidate>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+          <div class="alert" role="alert">
+            {% for error in form.non_field_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="field">
+          <label for="{{ form.buyer_name.id_for_label }}">{{ form.buyer_name.label }}</label>
+          {{ form.buyer_name }}
+          {% for error in form.buyer_name.errors %}
+            <p class="field-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="field">
+          <label for="{{ form.buyer_email.id_for_label }}">{{ form.buyer_email.label }}</label>
+          {{ form.buyer_email }}
+          {% for error in form.buyer_email.errors %}
+            <p class="field-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <button class="button" type="submit">خرید و دریافت اطلاعات</button>
+      </form>
+      <p class="fine">پرداخت واقعی انجام نمی‌شود؛ این خرید شبیه‌سازی است و مبلغی از شما کم نمی‌شود.</p>
+    </aside>
+  </article>
+{% endblock %}

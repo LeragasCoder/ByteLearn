@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}درس‌خانه{% endblock %}</title>
+  <meta name="description" content="فروشگاه دوره‌های عملی درس‌خانه. بعد از ثبت خرید، اطلاعات دسترسی ایمیل می‌شود.">
+  <link rel="icon" href="{% static 'shop/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'shop/styles.css' %}">
+</head>
+<body>
+  <a class="skip" href="#content">رفتن به محتوا</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="{% url 'course_list' %}">
+        <span class="mark" aria-hidden="true"></span>
+        درس‌خانه
+      </a>
+      <nav class="nav" aria-label="اصلی">
+        <a href="{% url 'course_list' %}" {% if request.resolver_match.url_name == 'course_list' %}aria-current="page"{% endif %}>دوره‌ها</a>
+        <a href="{% url 'about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>درباره</a>
+      </nav>
+    </div>
+  </header>
+  <main id="content" class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="foot">
+    <div class="top-inner">
+      <p>درس‌خانه</p>
+      <p>پرداخت این نسخه آزمایشی است و مبلغی کم نمی‌شود.</p>
+    </div>
+  </footer>
+</body>
+</html>

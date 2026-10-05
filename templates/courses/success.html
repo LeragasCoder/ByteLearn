@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load money %}
+
+{% block title %}خرید ثبت شد · درس‌خانه{% endblock %}
+
+{% block content %}
+  <article class="confirm">
+    <p class="kicker">سفارش {{ order.pk }}</p>
+    {% if email_failed %}
+      <h1>خرید ثبت شد، ایمیل نرفت</h1>
+      <p class="lede">خرید ثبت شد، اما ارسال ایمیل در این لحظه انجام نشد. سفارش شما محفوظ است و اطلاعات دوره دوباره ارسال می‌شود.</p>
+    {% else %}
+      <h1>خرید ثبت شد</h1>
+      <p class="lede">خرید ثبت شد. اطلاعات دوره به ایمیل شما ارسال می‌شود.</p>
+    {% endif %}
+    <dl class="facts">
+      <div>
+        <dt>دوره</dt>
+        <dd>{{ order.course.title }}</dd>
+      </div>
+      <div>
+        <dt>ایمیل</dt>
+        <dd class="email">{{ order.buyer_email }}</dd>
+      </div>
+      <div>
+        <dt>مبلغ</dt>
+        <dd>{{ order.amount|toman }}</dd>
+      </div>
+    </dl>
+    {% if console_email and not email_failed %}
+      <p class="fine">در حالت توسعه، متن همین ایمیل در خروجی کنسول سرور هم چاپ می‌شود.</p>
+    {% endif %}
+    <p class="confirm-actions">
+      <a class="button" href="{% url 'course_list' %}">بازگشت به دوره‌ها</a>
+    </p>
+  </article>
+{% endblock %}

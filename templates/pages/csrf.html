@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}نشست منقضی شد · درس‌خانه{% endblock %}
+
+{% block content %}
+  <article class="sheet">
+    <p class="kicker">خطا</p>
+    <h1>صفحه منقضی شده است</h1>
+    <p class="lede">برگردید و فرم خرید را یک بار دیگر بفرستید. سفارشی ثبت نشده است.</p>
+    <p class="confirm-actions"><a class="button" href="{% url 'course_list' %}">بازگشت به دوره‌ها</a></p>
+  </article>
+{% endblock %}
